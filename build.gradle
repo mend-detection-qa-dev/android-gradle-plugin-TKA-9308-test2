@@ -1,0 +1,48 @@
+def safeExtGet(prop) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : ext.get(prop)
+}
+
+ext {
+    buildToolsVersion = "28.0.3"
+    minSdkVersion = 16
+    compileSdkVersion = 28
+    targetSdkVersion = 29
+}
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath ("com.android.tools.build:gradle:3.4.1")
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion')
+    buildToolsVersion safeExtGet('buildToolsVersion')
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion')
+        targetSdkVersion safeExtGet('targetSdkVersion')
+        versionCode 1
+        versionName "1.0"
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.facebook.react:react-native:+'
+}
